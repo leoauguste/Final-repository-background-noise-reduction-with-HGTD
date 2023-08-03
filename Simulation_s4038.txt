@@ -1,0 +1,123 @@
+###################################################################
+Simulation s4038
+###################################################################
+
+
+mkdir s4038; cd s4038
+setupATLAS
+asetup Athena,23.0.14
+GetTfCommand.py --AMI=s4038 > run_s4038.sh
+vim run_s4038.sh
+
+
+(Le fichier simulation_s4038 permet d'automatiser cette partie si on veux faire plusieurs fichier en même temps)
+
+--inputEVNTFile '/chemin/fichierEVNT/nomfichier.root' 
+--outputHITSFile '/chemin/nouveaufichierHIT/nomfichier.HIT.root'
+
+
+setupATLAS
+source run_s4038.sh
+
+−−maxEvents ’ 1 0 0 ’
+###################################################################
+Transformation local global
+###################################################################
+
+mkdir  work/athena_sparse_checkout_3
+cd work/athena_sparse_checkout_3
+setupATLAS
+lsetup git
+git atlas init-workdir https://:@gitlab.cern.ch:8443/atlas/athena.git
+cd athena/
+git fetch upstream
+git checkout -b master-my-topic upstream/23.0 --no-track
+git atlas addpkg HitAnalysis GeoAdaptors
+mkdir ../build && cd ../build
+asetup 23.0,latest,Athena
+cmake ../athena/Projects/WorkDir/
+source x86_64-centos7-gcc11-opt/setup.sh
+make -j8
+
+
+vi ../athena/DetectorDescription/GeoModel/GeoAdaptors/GeoAdaptors/GeoSiHit.icc
+vi ../athena/Simulation/Tools/HitAnalysis/src/SiHitAnalysis.h
+
+
+setupATLAS
+lsetup git
+asetup 23.0,latest,Athena
+cmake ../athena/Projects/WorkDir/
+source x86_64-centos7-gcc11-opt/setup.sh
+make -j8
+
+
+
+RunHitAnalysis.py  -i /eos/user/l/lreynaud/mc15_14TeV.800380.Py8EG_A3NNPDF23LO_minbias_inelastic_low_keepJets.evgen.EVNT.e8205/Hit/000001low_minbias.HIT.root
+cp SiHitAnalysis.root /eos/user/l/lreynaud/mc15_14TeV.800380.Py8EG_A3NNPDF23LO_minbias_inelastic_low_keepJets.evgen.EVNT.e8205/GlobalHit/000001_global_low_minbias.HIT.root
+
+
+
+###################################################################
+Texte a remplacer dans le fichier GeoSiHit.icc
+set paste
+###################################################################
+
+
+    if (geoelement) {
+      if(m_hit->isHGTD()){
+        const HepGeom::Point3D<double> localHit = m_hit->localStartPosition();
+        HepGeom::Point3D<double> flippedHit;
+        flippedHit[0]=localHit.y();
+        flippedHit[1]=localHit.z();
+        flippedHit[2]=localHit.x();
+        const HepGeom::Point3D<double> globalStartPos = Amg::EigenTransformToCLHEP(geoelement->transformHit()) * (flippedHit);
+        double x=globalStartPos.x();
+        double y=globalStartPos.y();
+        double z=globalStartPos.z();
+        return HepGeom::Point3D<double>(x,y,z);
+      }else{
+      const HepGeom::Point3D<double> globalStartPos = Amg::EigenTransformToCLHEP(geoelement->transformHit()) * HepGeom::Point3D<double>(m_hit->localStartPosition());
+  
+      double x=globalStartPos.x();
+      double y=globalStartPos.y();
+      double z=globalStartPos.z();
+      return HepGeom::Point3D<double>(x,y,z);
+      }
+    }
+    
+    
+  
+###################################################################
+Texte à remplacer dans SiHitAnalysis.h pour avoir l'index pdg
+###################################################################
+
+  Gaudi::Property<bool> m_extraTruthBranches {this, "ExtraTruthBranches", true, ""};
+
+
+
+###################################################################
+Fusionner des ficheir ensemble
+###################################################################
+Le fichier roo_fusion.py permet d'automatiser cette partie
+
+hadd -f output.root input1.root  input2.root  input3.root  ... inputN.root
+
+hadd -f /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_309680_BeamGas_20MeV.HIT.root /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000003.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000014.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000023.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000054.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000055.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000085.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000062.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000067.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000090.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000092.HIT.root  /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000095.HIT.root  
+
+###################################################################
+Exemple de transformation local global
+###################################################################
+(On peut lancer toute ces samples ensembles dans le terminal si on a plusieur samples à traiter.)
+Le fichier SiHitAnalysis.py permet d'automatiser cette partie.
+
+
+
+RunHitAnalysis.py  -i /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/s4038_000003.HIT.root
+cp SiHitAnalysis.root /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000003.HIT.root
+
+RunHitAnalysis.py  -i /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/s4038_000014.HIT.root
+cp SiHitAnalysis.root /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000014.HIT.root
+
+RunHitAnalysis.py  -i /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/s4038_000023.HIT.root
+cp SiHitAnalysis.root /eos/user/l/lreynaud/BIB_Sample/s4038/309680_BeamGas_20MeV/Global_index_s4038_000023.HIT.root
