@@ -1,11 +1,15 @@
 '''
 Français
-Il faut avoir vim pour procéder à ce tuto
-Ce script permet de faire la transfomration de coordonnée Local -> Global avec autant de sous fichier root à traiter que vous voulez.
-Imaginons que vous auer 10 samples BIB au format Hit stocker dans le même dossier sur la cernbox.
-écrivé le chemin d'acces sur "input_path".
-Ecrivez la ou vous voulez le socker sur "output_path". Vous pouvez changer le nom du fichier que vous stocker en modifiant le dernier print, moi je rajoute juste un "Global" au début des fichiers.
-Lancer le code sur votre terminal cern et cela devrais print les lignes de code, vous n'aurez plus cas les copier coller ensemble lorsque vous ferez votre transformation local global.
+Voici le texte corrigé :
+
+"Il faut avoir Vim pour suivre ce tutoriel.
+Ce script permet de réaliser la transformation des coordonnées du système local au système global avec autant de sous-fichiers au format root que vous le souhaitez.
+Imaginons que vous ayez 10 échantillons BIB stockés au format Hit dans le même dossier sur la Cernbox.
+Écrivez le chemin d'accès dans "input_path".
+Indiquez où vous souhaitez stocker le fichier dans "output_path". Vous pouvez changer le nom du fichier que vous stockez en modifiant la dernière instruction print. 
+Personnellement, j'ajoute simplement un "Global" au début des noms de fichiers.
+Exécutez le code sur votre terminal CERN et cela devrait afficher les lignes de code. Il ne vous restera plus qu'à les copier-coller ensemble lorsque vous effectuerez 
+votre transformation du système local au système global.
 
 English
 You need to have vim to proceed with this tutorial. 
