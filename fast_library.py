@@ -22,9 +22,9 @@ import Tools_library as Tools
 Espacement des layers du HGTD avec les sample s4038_..._.HIT
 Si pour chaque HGTD le layer le plus proche du PI est noté 0 et le plus éloigné est 
 noté 3 (donc 0 1 2 3), on a comme distance entre chaque layer:
-Entre 0 et 1: 10mm  Temps de parcour pour c : 0.033 nanoseconde
-Entre 1 et 2: 15mm  Temps de parcour pour c : 0.050 nanoseconde
-Entre 2 et 3: 10mm  Temps de parcour pour c : 0.033 nanoseconde
+Entre 0 et 1: 10mm  Temps de parcours pour c : 0.033 nanoseconde
+Entre 1 et 2: 15mm  Temps de parcours pour c : 0.050 nanoseconde
+Entre 2 et 3: 10mm  Temps de parcours pour c : 0.033 nanoseconde
 En valeur absolue:
 Layer 0 = 3443mm
 Layer 1 = 3453mm
@@ -39,9 +39,9 @@ Layer 3 = 3478mm
 
 ####################################################################################
 '''LDL Importation des data event par event avec creation du vecteur R et en 
-eliminant les hit isole et les bug 
-On separe BIB et top car dans les event BIB j'ai 8 event top qui se sont glisse 
-et il faut que je les supprime '''
+eliminant les hits isoles et les bugs 
+On separe BIB et top car dans les events BIB j'ai 8 event top qui se sont glisse 
+et il faut que je les supprimes '''
 ####################################################################################
 
 
@@ -59,7 +59,7 @@ def Lbr_ImportDataBIB(NomTree):
 		t2.append(list(event.HGTD_time))
 		pdg2.append(list(event.HGTD_pdgId))
 		E2.append(list(event.HGTD_eloss))
-#pour enlever les event avec 1 hit et parce que certain hit sont en double ce qui fait bug le clustering  (meme valeurs pour toute les variable à la dernière decimal près) 
+#pour enlever les events avec 1 hit et parce que certain hit sont en double ce qui fait bug le clustering  (meme valeurs pour toute les variable à la dernière decimal près) 
 	for x1,y1,z1,t1,pdg1,E1 in zip(x2,y2,z2,t2,pdg2,E2):
 		x4,y4,z4,t4,pdg4,E4=[],[],[],[],[],[]
 		for i in range(len(x1)):
@@ -70,7 +70,7 @@ def Lbr_ImportDataBIB(NomTree):
 				t4.append(t1[i])
 				pdg4.append(pdg1[i])
 				E4.append(E1[i])
-		if len(x4)>1 and len(x4)<700: #Il y a des evenement top glisser dans mes samples BIB, ou du moins des evenement cheloux. je les supprimes comme ça
+		if len(x4)>1 and len(x4)<700: #Il y a 8 evenements top glisser dans mes samples BIB, je les supprimes comme ça
 			y.append(y4)
 			x.append(x4)
 			z.append(z4)
@@ -113,7 +113,7 @@ def Lbr_ImportDataTop(NomTree):
 		t2.append(list(event.HGTD_time))
 		pdg2.append(list(event.HGTD_pdgId))
 		E2.append(list(event.HGTD_eloss))
-#pour enlever les event avec 1 hit et parce que certain hit sont en double ce qui fait bug le clustering
+#pour enlever les events avec 1 hit et parce que certain hits sont en double ce qui fait bug le clustering
 	for x1,y1,z1,t1,pdg1,E1 in zip(x2,y2,z2,t2,pdg2,E2):
 		x4,y4,z4,t4,pdg4,E4=[],[],[],[],[],[]
 		for i in range(len(x1)):
@@ -609,7 +609,6 @@ def Lbr_Graph(VarAbs, VarOrd, AbsTitre, OrdTitre, Titre ):
 ####################################################################################
 '''On regarde les traces qui sont valide pour different coef de clustering
 Utiliser les indices T et B pour y comprendre quelque chose. 
-G pour HGTD Gauche.
 Le BIB va dans le sens inverse à z (a < 0) dans nos samples.
 +----------------------+-------------+
 | 				 HGTD       	   |
@@ -625,6 +624,7 @@ Le BIB va dans le sens inverse à z (a < 0) dans nos samples.
 |  total      |   B4  |   T4       |
 +----------------------+-------------+ 
 ####################################################################################
+Creation d'une matrice de confusion
 #####################
 +-------------------+
 | True positive %   |
