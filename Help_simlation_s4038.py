@@ -1,12 +1,12 @@
 '''
 Français
-Il faut avoir vim pour procéder à ce tuto
-Ce script permet de créer le fichier run_s4038.sh avec autant de sous fichier root à traiter que vous voulez.
-Imaginons que vous auer 10 samples BIB au format EVNT stocker dans le même dossier sur la cernbox.
-Ecrire le chemin d'acces du dossier sur "input_path".
-Ecrire le chemin d'acces du dossier ou vous voulez le stocker "outpout_path"
-output_name1, num_list, output_name2 sert à la creation du nom des outpout
-Créer un fichier run_s4038.sh sur votre terminal cern, lancer le code simulation_s4038.py au même endroit que le fichier .sh et cela remplira automatiquement votre fichier .sh
+Vous devez avoir Vim pour suivre ce tutoriel. 
+Ce script permet de créer le fichier run_s4038.sh avec autant de sous-fichiers root à traiter que vous le souhaitez. 
+Imaginons que vous ayez 10 échantillons BIB au format EVNT stockés dans le même dossier sur la Cernbox. 
+Écrivez le chemin d'accès du dossier sur "input_path". 
+Écrivez le chemin d'accès du dossier où vous souhaitez le stocker sur "output_path". 
+output_name1, num_list, output_name2 servent à la création du nom des sorties. 
+Créez un fichier run_s4038.sh sur votre terminal CERN, lancez le code simulation_s4038.py au même endroit que le fichier .sh et cela remplira automatiquement votre fichier .sh.
 
 Anglais
 You need to have vim to proceed with this tutorial. 
