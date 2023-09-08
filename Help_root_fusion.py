@@ -1,11 +1,11 @@
 '''
 Français
-Il faut avoir vim pour procéder à ce tuto
-Ce script permet de fusionner plusieurs fichier root en un seul.
-Imaginons que vous auver 10 samples BIB au format Hit stocker dans le même dossier sur la cernbox.
-écrivé le chemin d'acces du dossier sur "input_path".
-Ecrivez la ou vous voulez le socker sur "output_path". Vous devez donner un nom au fichier, dans mon exemple je l'ai nommé "All_Global_309680_BeamGas_20MeV.Hit.root".
-Lancer le code sur votre terminal cern et cela devrais print la lignes de code, vous n'aurez plus cas lacopier coller n'importe ou dans votre terminal cern pour fusionner vos fichier.
+Il faut avoir Vim pour suivre ce tutoriel.
+Ce script permet de fusionner plusieurs fichiers root en un seul.
+Imaginons que vous ayez 10 échantillons BIB au format Hit stockés dans le même dossier sur la Cernbox.
+Écrivez le chemin d'accès du dossier dans "input_path".
+Indiquez où vous voulez le sauvegarder dans "output_path". Vous devez donner un nom au fichier, dans mon exemple je l'ai nommé "All_Global_309680_BeamGas_20MeV.Hit.root".
+Exécutez le code sur votre terminal CERN et cela devrait afficher la ligne de code. Vous n'aurez plus qu'à la copier-coller n'importe où dans votre terminal CERN pour fusionner vos fichiers.
 
 English
 You need to have vim to proceed with this tutorial. 
